@@ -1,4 +1,0 @@
-<div className="banner-text">
-            <h1>SUPPORT WITH A CLICK</h1>
-            <p>EMPOWER DREAMS, FUEL PASSIONS</p>
-          </div>

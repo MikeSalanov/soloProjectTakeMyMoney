@@ -15,10 +15,15 @@ function MainBody({ children }) {
           <div>
             <h1>ABOUT US</h1>
             <p>
-              We are a platform for donating to various projects. Members of our platform develop pharmaceuticals, robotic solutions, make discoveries in the field of artificial intelligence, and even develop games.
+              We are a platform for donating to various projects.
+              Members of our platform develop pharmaceuticals,
+              robotic solutions, make discoveries in the field of artificial intelligence,
+              and even develop games.
             </p>
             <p>
-              You can join the ranks of those who are helping to implement large projects today, or, on the contrary, you need financial help and want to tell everyone about your work.
+              You can join the ranks of those who are helping to implement large projects today,
+              or, on the contrary,
+              you need financial help and want to tell everyone about your work.
             </p>
             <p>Join us and let&apos;s make the world a better place!😃</p>
           </div>

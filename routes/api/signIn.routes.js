@@ -17,6 +17,12 @@ router.route('/').post(
       path: '*',
       maxAge: 6 * 60 * 60 * 1000,
     });
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: false,
+      path: '*',
+      maxAge: 30 * 60 * 1000,
+    });
     await req.person.addRefreshTokenToUser(refreshToken);
     return res.status(200)
       .json({ accessToken });

@@ -33,7 +33,7 @@ class Person {
       where: { login: this.login },
     });
     await RefreshToken.create({
-      refreshToken,
+      token: refreshToken,
       userId: dataValues.id,
       isValid: true,
       createdAt: new Date().toISOString(),
@@ -77,6 +77,10 @@ class Person {
       nest: true,
     });
     return resultOfInnerJoinSelectOfRefreshTokenData;
+  }
+
+  async toMakeInvalidRefeshToken(token) {
+    await RefreshToken.update({ isValid: false }, { where: { token } });
   }
 }
 

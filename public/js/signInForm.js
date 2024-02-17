@@ -1,9 +1,9 @@
-const formOfSignIn = document.forms.signIn;
+const formOfSignUp = document.forms.signIn;
 
-formOfSignIn.addEventListener('submit', async (event) => {
+formOfSignUp.addEventListener('submit', async (event) => {
   event.preventDefault();
   try {
-    const body = Object.fromEntries(new FormData(formOfSignIn));
+    const body = Object.fromEntries(new FormData(formOfSignUp));
     const data = await fetch(
       '/signIn',
       { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) },
@@ -11,7 +11,11 @@ formOfSignIn.addEventListener('submit', async (event) => {
     const { accessToken } = await data.json();
     if (accessToken) {
       localStorage.setItem('accessToken', data.accessToken);
-      window.location.href = '/account';
+      await fetch('/valid', {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      });
+      window.location.href = '/valid';
     }
   } catch (error) {
     console.error(error);

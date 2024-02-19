@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  max-width: 100vw;
+  display: flex;
+}
+
+body > div:nth-of-type(1) {
+  height: 100vh;
+  width: 50%;
+  background-color: #303030;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body > div:nth-of-type(1) > button {
+  border: none;
+  outline: none;
+  width: 10vw;
+  height: 10vh;
+  background-color: #FFFF;
+  color: #303030;
+  font-family: "Raleway", sans-serif;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+div:nth-of-type(1) > ul {
+  padding: 2vh 0 2vh 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 35vh;
+}
+
+li {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5vw;
+  font-size: 1.5rem;
+  margin-bottom: 1vh;
+}
+
+li > button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+body > div:nth-of-type(2) {
+  height: 100vh;
+  width: 50%;
+  background-color: #FFFF;
+}
+
+body > div:nth-of-type(1) > ul {
+  color: #FFFF;
+}
+
+body > div:nth-of-type(2) {
+  height: 100vh;
+  width: 50%;
+  background-color: #ffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}

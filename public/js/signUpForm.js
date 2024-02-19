@@ -16,7 +16,7 @@ formOfSignUp.addEventListener('submit', async (event) => {
       )).json();
       if (accessToken) {
         localStorage.setItem('accessToken', accessToken);
-        window.location.href = '/valid';
+        window.location.href = '/account';
       }
     } else {
       document.querySelector('form[name="signUp"]').appendChild(document.createElement('p'));

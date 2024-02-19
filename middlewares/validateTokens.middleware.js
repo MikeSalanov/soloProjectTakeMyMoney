@@ -5,35 +5,40 @@ const Person = require('../classes/Person');
 
 const validateTokens = (req, res, next) => {
   const { accessToken, refreshToken } = req.cookies;
-  jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET, (errAccessToken, user) => {
+  jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET, (errAccessToken, userAccessToken) => {
     if (!errAccessToken) {
-      console.log('user in verify access token', user);
-      req.user = user;
+      req.user = userAccessToken;
       return next();
     }
-    jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (errRefreshToken, { login }) => {
-      if (errRefreshToken) {
-        return res.redirect('/signIn');
-      }
-      console.log('user in verify refresh token', user);
-      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = releaseTokens();
+    jwt.verify(
+      refreshToken,
+      process.env.JWT_REFRESH_SECRET,
+      async (errRefreshToken, userRefreshToken) => {
+        if (errRefreshToken) {
+          return res.redirect('/signIn');
+        }
+        console.log(userRefreshToken);
+        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = releaseTokens({
+          login: userRefreshToken.login,
+        });
 
-      const person = new Person(login);
-      await person.toMakeInvalidRefeshToken(refreshToken);
+        const person = new Person(userRefreshToken.login);
+        await person.toMakeInvalidRefeshToken(refreshToken);
 
-      res.cookie('refreshToken', newRefreshToken, {
-        httpOnly: true,
-        secure: false,
-        maxAge: 6 * 60 * 60 * 1000,
-      });
+        res.cookie('refreshToken', newRefreshToken, {
+          httpOnly: true,
+          secure: false,
+          maxAge: 6 * 60 * 60 * 1000,
+        });
 
-      req.user = {
-        ...person,
-        accessToken: newAccessToken,
-        refreshToken: newRefreshToken,
-      };
-      return next();
-    });
+        req.user = {
+          login: person.login,
+          accessToken: newAccessToken,
+          refreshToken: newRefreshToken,
+        };
+        return next();
+      },
+    );
   });
 };
 

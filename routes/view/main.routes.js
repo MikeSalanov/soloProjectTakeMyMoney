@@ -10,7 +10,7 @@ const ButtonOfAccount = require('../../components/ButtonOfAccount');
 
 router.route('/').get((req, res) => {
   let buttonInHeader;
-  if (req.headers.authorization) {
+  if (req.cookies.accessToken) {
     buttonInHeader = React.createElement(ButtonOfAccount);
   } else {
     buttonInHeader = React.createElement(ButtonsOfAuthorization);

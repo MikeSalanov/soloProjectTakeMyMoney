@@ -5,7 +5,8 @@ const signInRouterFrontend = require('./routes/view/signIn.routes');
 const signUpRouterFrontend = require('./routes/view/signUp.routes');
 const signUpRouterApi = require('./routes/api/register.routes');
 const signInRouterApi = require('./routes/api/signIn.routes');
-const validRouter = require('./routes/view/valid.routes');
+const accountRouter = require('./routes/view/account.routes');
+const routerOfChangeNameOfProject = require('./routes/api/project.routes');
 require('dotenv').config();
 
 const app = express();
@@ -16,6 +17,7 @@ serverConfig(app);
 app.use('/', mainPageRouter);
 app.use('/signUp', signUpRouterFrontend, signUpRouterApi);
 app.use('/signIn', signInRouterFrontend, signInRouterApi);
-app.use('/valid', validRouter);
+app.use('/account', accountRouter);
+app.use('/project', routerOfChangeNameOfProject);
 
 app.listen(PORT, () => console.log(`Server has been start on port: ${PORT}`));

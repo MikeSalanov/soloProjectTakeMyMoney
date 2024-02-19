@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 const bcrypt = require('bcrypt');
-const { RefreshToken, User } = require('../db/models/index');
+const { RefreshToken, User, Project } = require('../db/models/index');
 
 class Person {
   #login;
@@ -72,7 +72,7 @@ class Person {
           required: true,
         },
       ],
-      where: { refreshToken },
+      where: { token: refreshToken },
       raw: true,
       nest: true,
     });
@@ -81,6 +81,55 @@ class Person {
 
   async toMakeInvalidRefeshToken(token) {
     await RefreshToken.update({ isValid: false }, { where: { token } });
+  }
+
+  async toGetAllProjects() {
+    const projects = await Project.findAll();
+    return projects;
+  }
+
+  async toGetAllProjectsOfUser() {
+    const resultOfInnerJoinSelectOfRefreshTokenData = await Project.findAll({
+      include: [
+        {
+          model: User,
+          where: { login: this.login },
+        },
+      ],
+      raw: true,
+      nest: true,
+    });
+    return resultOfInnerJoinSelectOfRefreshTokenData;
+  }
+
+  async changeNameOfProject(oldNameOfProject, newNameOfProject) {
+    await Project.update({ name: newNameOfProject }, {
+      where: {
+        name: oldNameOfProject,
+      },
+    });
+  }
+
+  async removeProject(nameOfProject) {
+    await Project.destroy({
+      where: {
+        name: nameOfProject,
+      },
+    });
+  }
+
+  async createProject({ name, description }) {
+    const user = await User.findOne({ where: { login: this.login } });
+    console.log(user.dataValues.id);
+    await Project.create({
+      name,
+      description,
+      ownerId: user.dataValues.id,
+      rating: 0,
+      balance: 0,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
   }
 }
 

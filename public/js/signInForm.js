@@ -15,7 +15,7 @@ formOfSignUp.addEventListener('submit', async (event) => {
         method: 'GET',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
       });
-      window.location.href = '/valid';
+      window.location.href = '/account';
     }
   } catch (error) {
     console.error(error);
